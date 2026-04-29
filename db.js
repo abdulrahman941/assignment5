@@ -1,18 +1,23 @@
-const mysq2 = require("mysql2");
+const mysq2 = require("mysql2/promise");
 
-const connection = mysq2.createConnection({
+
+async function connectToDB(){
+  try {
+  const connection =await mysq2.createConnection({
   host: "localhost",
   user: "root",
   password: "",
   database: "retail_store"
 });
-
-connection.connect((err) => {
-  if (err) {
-    console.log("DB Error:", err);
-  } else {
-    console.log("Connected to MySQL");
+console.log("Connected to MySQL");
+    return connection;
+  } catch (error) {
+    console.error("DB Error:", err.message);
   }
-});
+}
 
-module.exports = connection;
+
+connectToDB()
+
+
+module.exports = connectToDB;
